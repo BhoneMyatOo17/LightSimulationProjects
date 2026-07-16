@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Holographic Ticket Hover</title>
+  <style>
+    :root {
+      --rot-x: 0deg;
+      --rot-y: 0deg;
+      --band-x: -60%;
+      --band-y: -60%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #e9e9ec 0%, #d3d3d8 55%, #c7c7cd 100%);
+    }
+
+    .stage {
+      perspective: 1400px;
+    }
+
+    .ticket {
+      position: relative;
+      width: min(90vw, 900px);
+      aspect-ratio: 1289 / 450;
+      border-radius: 14px;
+      overflow: hidden;
+      transform: rotateX(var(--rot-x)) rotateY(var(--rot-y));
+      transform-style: preserve-3d;
+      transition: transform .15s ease-out, box-shadow .3s ease;
+      box-shadow: 0 25px 70px -25px rgba(0, 0, 0, .45);
+      cursor: pointer;
+    }
+
+    .ticket:hover {
+      box-shadow: 0 35px 90px -25px rgba(0, 0, 0, .55);
+    }
+
+    .layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .layer-base {
+      background-image: url('img/ticket.png');
+      background-size: cover;
+    }
+
+    .mask-shapes {
+      --mask-svg: url('img/overlay.png');
+    }
+
+    .layer-rainbow {
+      background: linear-gradient(115deg,
+          transparent 30%,
+          rgba(255, 95, 109, .65) 42%,
+          rgba(255, 195, 113, .65) 46%,
+          rgba(249, 248, 113, .65) 50%,
+          rgba(110, 231, 183, .65) 54%,
+          rgba(96, 165, 250, .65) 58%,
+          rgba(167, 139, 250, .65) 62%,
+          transparent 74%);
+      background-size: 400% 400%;
+      background-position: var(--band-x) var(--band-y);
+      mix-blend-mode: color-dodge;
+      -webkit-mask-image: var(--mask-svg);
+      mask-image: var(--mask-svg);
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      opacity: 0;
+      transition: background-position .05s linear, opacity .18s ease;
+    }
+
+    .ticket.is-active .layer-rainbow {
+      opacity: .9;
+    }
+
+    .layer-shine {
+      background: linear-gradient(115deg,
+          transparent 35%,
+          rgba(255, 255, 255, .18) 48%,
+          rgba(255, 255, 255, .22) 50%,
+          rgba(255, 255, 255, .18) 52%,
+          transparent 65%);
+      background-size: 400% 400%;
+      background-position: var(--band-x) var(--band-y);
+      mix-blend-mode: soft-light;
+      opacity: 0;
+      transition: background-position .05s linear, opacity .18s ease;
+    }
+
+    .ticket.is-active .layer-shine {
+      opacity: .3;
+    }
+
+    .layer-edge {
+      border-radius: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="stage">
+    <div class="ticket" id="ticket">
+      <div class="layer layer-base">
+      </div>
+      <div class="layer layer-rainbow mask-shapes"></div>
+      <div class="layer layer-shine"></div>
+      <div class="layer layer-edge"></div>
+    </div>
+  </div>
+
+  <script src="ticket.js"></script>
+</body>
+
+</html>

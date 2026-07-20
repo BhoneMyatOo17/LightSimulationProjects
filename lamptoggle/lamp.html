@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lamp pull-string toggle</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="position:relative;width:100%;max-width:800px;margin:0 auto">
+    <svg id="lamp-svg" width="100%" viewBox="0 0 640 520" role="img" style="touch-action:none">
+      <defs>
+        <radialGradient id="glow-outer-grad" cx="50%" cy="0%" r="95%">
+          <stop offset="0%" stop-color="#EFBB55" stop-opacity="0.72" />
+          <stop offset="45%" stop-color="#EFBB55" stop-opacity="0.5" />
+          <stop offset="100%" stop-color="#EFBB55" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="glow-core-grad" cx="50%" cy="0%" r="95%">
+          <stop offset="0%" stop-color="#F3C765" stop-opacity="1" />
+          <stop offset="45%" stop-color="#F3C765" stop-opacity="0.75" />
+          <stop offset="100%" stop-color="#F3C765" stop-opacity="0" />
+        </radialGradient>
+        <filter id="soft-outer" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="16" />
+        </filter>
+        <filter id="soft-core" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="7" />
+        </filter>
+      </defs>
+
+      <path d="M320 95 C460 -20, 620 60, 600 230 C592 310, 555 390, 520 430" fill="none" stroke="#1c2b5e"
+        stroke-width="3.5" />
+      <ellipse cx="520" cy="460" rx="100" ry="32" fill="#1c2b5e" />
+
+      <path id="glow-outer-shape" d="M300 225 L620 500 L20 500 Z" fill="url(#glow-outer-grad)" filter="url(#soft-outer)"
+        opacity="0" style="transition:opacity .45s ease" />
+      <path id="glow-core-shape" d="M300 225 L470 490 L130 490 Z" fill="url(#glow-core-grad)" filter="url(#soft-core)"
+        opacity="0" style="transition:opacity .45s ease" />
+
+      <path
+        d="M185 230 C185 120, 220 90, 300 90 C380 90, 415 120, 415 230 C415 238, 380 244, 300 244 C220 244, 185 238, 185 230 Z"
+        fill="#1c2b5e" />
+
+      <path id="string-path" d="M120 20 L120 320" fill="none" stroke="#1a1a1a" stroke-width="3"
+        stroke-linecap="round" />
+      <circle id="string-knob" cx="120" cy="320" r="15" fill="#1a1a1a" style="cursor:grab" />
+    </svg>
+    <p style="text-align:center;font-size:13px;color:#888;margin:8px 0 0;font-family:inherit">Drag the knob and let go
+    </p>
+  </div>
+
+  <script src="lamp.js"></script>
+
+</body>
+
+</html>
